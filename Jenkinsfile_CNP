@@ -1,6 +1,6 @@
 #!groovy
 //noinspection GroovyUnusedAssignment
-@Library("Infrastructure") _
+@Library("Infrastructure@hmctsdemo") _
 
 import uk.gov.hmcts.contino.Environment
 
@@ -13,4 +13,8 @@ onMaster {
 
 onDemo {
   sharedInfrastructurePipeline('ccpay', environment.demoName, 'nonprod')
+}
+
+onHMCTSDemo {
+  sharedInfrastructurePipeline('ccpay', environment.hmctsDemoName, 'hmctsdemo')
 }
