@@ -30,3 +30,9 @@ variable "team_name" {
 variable "team_contact" {
   default = "#cc-payments-tech "
 }
+
+variable "fees_register_external_hostname" {}
+variable "fees_register_external_cert_name" {}
+variable "fees_register_external_cert_vault_uri" {}
+
+variable "ilbIp" {}
