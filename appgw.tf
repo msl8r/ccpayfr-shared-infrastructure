@@ -1,10 +1,10 @@
-data "azurerm_key_vault_secret" "fees_register-cert" {
-  name = "${var.fees_register_external_cert_name}"
-  vault_uri = "${var.fees_register_external_cert_vault_uri}"
+data "azurerm_key_vault_secret" "fees-register-frontend-cert" {
+  name = "${var.fees-register-frontend_external_cert_name}"
+  vault_uri = "${var.fees-register-frontend_external_cert_vault_uri}"
 }
 
 locals {
-  fees_register_cert_suffix = "${var.env != "prod" ? "-fees_register" : ""}"
+  fees-register-frontend_cert_suffix = "${var.env != "prod" ? "-fees-register-frontend" : ""}"
 }
 
 //APPLICATION GATEWAY RESOURCE FOR ENV=A
@@ -26,30 +26,30 @@ module "appGwSouth" {
 
   sslCertificates = [
     {
-      name = "${var.fees_register_external_cert_name}${local.fees_register_cert_suffix}"
-      data = "${data.azurerm_key_vault_secret.fees_register-cert.value}"
+      name = "${var.fees-register-frontend_external_cert_name}${local.fees-register-frontend_cert_suffix}"
+      data = "${data.azurerm_key_vault_secret.fees-register-frontend-cert.value}"
       password = ""
     }
   ]
 
   # Http Listeners
   httpListeners = [
-    # fees_register
+    # fees-register-frontend
     {
-      name = "fees_register-http-listener"
+      name = "fees-register-frontend-http-listener"
       FrontendIPConfiguration = "appGatewayFrontendIP"
       FrontendPort = "frontendPort80"
       Protocol = "Http"
       SslCertificate = ""
-      hostName = "${var.fees_register_external_hostname}"
+      hostName = "${var.fees-register-frontend_external_hostname}"
     },
     {
-      name = "fees_register-https-listener"
+      name = "fees-register-frontend-https-listener"
       FrontendIPConfiguration = "appGatewayFrontendIP"
       FrontendPort = "frontendPort443"
       Protocol = "Https"
-      SslCertificate = "${var.fees_register_external_cert_name}${local.fees_register_cert_suffix}"
-      hostName = "${var.fees_register_external_hostname}"
+      SslCertificate = "${var.fees-register-frontend_external_cert_name}${local.fees-register-frontend_cert_suffix}"
+      hostName = "${var.fees-register-frontend_external_hostname}"
     }
   ]
 
@@ -74,9 +74,9 @@ module "appGwSouth" {
       CookieBasedAffinity = "Disabled"
       AuthenticationCertificates = ""
       probeEnabled = "True"
-      probe = "fees_register-http-probe"
+      probe = "fees-register-frontend-http-probe"
       PickHostNameFromBackendAddress = "False"
-      HostName = "${var.fees_register_external_hostname}"
+      HostName = "${var.fees-register-frontend_external_hostname}"
     },
     {
       name = "backend-443"
@@ -85,35 +85,35 @@ module "appGwSouth" {
       CookieBasedAffinity = "Disabled"
       AuthenticationCertificates = "ilbCert"
       probeEnabled = "True"
-      probe = "fees_register-https-probe"
+      probe = "fees-register-frontend-https-probe"
       PickHostNameFromBackendAddress = "False"
-      Host = "${var.fees_register_external_hostname}"
+      Host = "${var.fees-register-frontend_external_hostname}"
 
     }
   ]
   # Request routing rules
   requestRoutingRules = [
-    # fees_register
+    # fees-register-frontend
     {
-      name = "fees_register-http"
+      name = "fees-register-frontend-http"
       RuleType = "Basic"
-      httpListener = "fees_register-http-listener"
+      httpListener = "fees-register-frontend-http-listener"
       backendAddressPool = "${var.product}-${var.env}"
       backendHttpSettings = "backend-80"
     },
     {
-      name = "fees_register-https"
+      name = "fees-register-frontend-https"
       RuleType = "Basic"
-      httpListener = "fees_register-https-listener"
+      httpListener = "fees-register-frontend-https-listener"
       backendAddressPool = "${var.product}-${var.env}"
       backendHttpSettings = "backend-443"
     }
   ]
 
   probes = [
-    # fees_register
+    # fees-register-frontend
     {
-      name = "fees_register-http-probe"
+      name = "fees-register-frontend-http-probe"
       protocol = "Http"
       path = "/"
       interval = 30
@@ -121,11 +121,11 @@ module "appGwSouth" {
       unhealthyThreshold = 5
       pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings = "backend-80"
-      host = "${var.fees_register_external_hostname}"
+      host = "${var.fees-register-frontend_external_hostname}"
       healthyStatusCodes = "200-399"
     },
     {
-      name = "fees_register-https-probe"
+      name = "fees-register-frontend-https-probe"
       protocol = "Https"
       path = "/"
       interval = 30
@@ -133,7 +133,7 @@ module "appGwSouth" {
       unhealthyThreshold = 5
       pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings = "backend-443"
-      host = "${var.fees_register_external_hostname}"
+      host = "${var.fees-register-frontend_external_hostname}"
       healthyStatusCodes = "200-399"
     }
   ]

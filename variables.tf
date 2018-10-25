@@ -31,13 +31,13 @@ variable "team_contact" {
   default = "#cc-payments-tech "
 }
 
-variable "fees_register_external_hostname" {
+variable "fees-register-frontend_external_hostname" {
   default = "fees-register.hmctsdemo.platform.hmcts.net"
 }
-variable "fees_register_external_cert_name" {
+variable "fees-register-frontend_external_cert_name" {
   default = "external-cert"
 }
-variable "fees_register_external_cert_vault_uri" {
+variable "fees-register-frontend_external_cert_vault_uri" {
   default = "https://ccpay-hmctsdemo.vault.azure.net/"
 }
 
