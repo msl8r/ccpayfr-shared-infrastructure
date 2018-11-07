@@ -12,11 +12,26 @@ module "topic" {
   resource_group_name   = "${azurerm_resource_group.rg.name}"
 }
 
+module "queue" {
+  source                = "git@github.com:hmcts/terraform-module-servicebus-queue.git"
+  name                  = "psc-queue"
+  namespace_name        = "${module.servicebus-namespace.name}"
+  resource_group_name   = "${azurerm_resource_group.rg.name}"
+}
+
+module "deadletter-queue" {
+  source                = "git@github.com:hmcts/terraform-module-servicebus-queue.git"
+  name                  = "psc-deadletter-queue"
+  namespace_name        = "${module.servicebus-namespace.name}"
+  resource_group_name   = "${azurerm_resource_group.rg.name}"
+}
+
 module "subscription" {
   source                = "git@github.com:hmcts/terraform-module-servicebus-subscription.git"
   name                  = "psc"
   namespace_name        = "${module.servicebus-namespace.name}"
   topic_name            = "${module.topic.name}"
+
   resource_group_name   = "${azurerm_resource_group.rg.name}"
 }
 
