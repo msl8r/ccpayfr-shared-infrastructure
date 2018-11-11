@@ -23,6 +23,15 @@ module "subscription" {
   topic_name            = "${module.topic.name}"
   resource_group_name   = "${azurerm_resource_group.rg.name}"
 }
+# primary connection string for send and listen operations
+output "sb_primary_send_and_listen_connection_string" {
+  value = "${module.servicebus-namespace.primary_send_and_listen_connection_string}"
+}
+
+# secondary connection string for send and listen operations
+output "sb_secondary_send_and_listen_connection_string" {
+  value = "${module.servicebus-namespace.secondary_send_and_listen_connection_string}"
+}
 
 output "topic_primary_send_and_listen_connection_string" {
   value = "${module.topic.primary_send_and_listen_connection_string}"
