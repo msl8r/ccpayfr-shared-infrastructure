@@ -6,7 +6,7 @@ locals {
 }
 
 module "asp" {
-  source              = "git@github.com:hmcts/cnp-module-app-service-plan?ref=master"
+  source              = "git@github.com:hmcts/cnp-module-app-service-plan?ref=asp_resource_id"
   location            = "${var.location}"
   env                 = "${var.env}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
