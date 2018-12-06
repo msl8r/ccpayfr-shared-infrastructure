@@ -20,7 +20,7 @@ module "topic" {
 }
 
 module "queue" {
-  source                = "git@github.com:smathangi/terraform-module-servicebus-queue?ref=queueName_output"
+  source                = "git@github.com:hmcts/terraform-module-servicebus-queue.git"
   name                  = "${local.retry_queue}"
   namespace_name        = "${module.servicebus-namespace.name}"
   resource_group_name   = "${azurerm_resource_group.rg.name}"
