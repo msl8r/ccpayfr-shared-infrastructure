@@ -30,3 +30,8 @@ variable "team_name" {
 variable "team_contact" {
   default = "#cc-payments-tech "
 }
+variable "application_type" {
+  type = "string"
+  default = "Web"
+  description = "Type of Application Insights (Web/Other)"
+}
