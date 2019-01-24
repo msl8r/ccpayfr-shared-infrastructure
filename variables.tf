@@ -30,9 +30,3 @@ variable "team_name" {
 variable "team_contact" {
   default = "#cc-payments-tech "
 }
-// as of now, UK South is unavailable for Application Insights
-variable "appinsights_location" {
-  type = "string"
-  default = "West Europe"
-  description = "Location for Application Insights"
-}
