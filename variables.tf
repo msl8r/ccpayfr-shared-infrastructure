@@ -12,6 +12,12 @@ variable "env" {
   type = "string"
 }
 
+variable "subscription" {
+  type    = "string"
+}
+
+variable "ilbIp" {}
+
 variable "tenant_id" {
   description = "(Required) The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. This is usually sourced from environemnt variables and not normally required to be specified."
 }
@@ -35,3 +41,9 @@ variable "application_type" {
   default = "Web"
   description = "Type of Application Insights (Web/Other)"
 }
+
+
+variable "pay_bubble_external_cert_name" {}
+variable "pay_bubble_external_cert_vault_uri" {}
+variable "pay_bubble_external_hostname" {}
+
