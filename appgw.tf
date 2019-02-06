@@ -33,7 +33,7 @@ module "appGwSouth" {
   httpListeners = [
     # paybubble
     {
-      name = "pay-bubble-frontend-http-listener"
+      name = "pay-bubble-http-listener"
       FrontendIPConfiguration = "appGatewayFrontendIP"
       FrontendPort = "frontendPort80"
       Protocol = "Http"
