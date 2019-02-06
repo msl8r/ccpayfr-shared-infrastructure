@@ -72,7 +72,7 @@ module "appGwSouth" {
       probeEnabled = "True"
       probe = "pay-bubble-http-probe"
       PickHostNameFromBackendAddress = "False"
-      HostName = "${var.pay_bubble_external_hostname}"
+      Host = "${var.pay_bubble_external_hostname}"
     },
     {
       name = "backend-443"
