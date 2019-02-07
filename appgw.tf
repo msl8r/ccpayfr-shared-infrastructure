@@ -10,7 +10,7 @@ module "appGwSouth" {
   subscription = "${var.subscription}"
   location = "${var.location}"
   wafName = "${var.product}"
-  resourcegroupname = "${azurerm_resource_group.rg.name}"  
+  resourcegroupname = "${azurerm_resource_group.rg.name}"
 
   # vNet connections
   gatewayIpConfigurations = [
@@ -31,14 +31,6 @@ module "appGwSouth" {
   # Http Listeners
   httpListeners = [
     # paybubble
-    {
-      name = "pay-bubble-http-listener"
-      FrontendIPConfiguration = "appGatewayFrontendIP"
-      FrontendPort = "frontendPort80"
-      Protocol = "Http"
-      SslCertificate = ""
-      hostName = "${var.pay_bubble_external_hostname}"
-    },
     {
       name = "pay-bubble-https-listener"
       FrontendIPConfiguration = "appGatewayFrontendIP"
@@ -71,20 +63,8 @@ module "appGwSouth" {
       AuthenticationCertificates = ""
       probeEnabled = "True"
       probe = "pay-bubble-http-probe"
-      PickHostNameFromBackendAddress = "True"
-      HostName = ""
-    },
-    {
-      name = "backend-443"
-      port = 443
-      Protocol = "Https"
-      CookieBasedAffinity = "Disabled"
-      AuthenticationCertificates = "ilbCert"
-      probeEnabled = "True"
-      probe = "pay-bubble-https-probe"
-      PickHostNameFromBackendAddress = "True"
-      HostName = ""
-
+      PickHostNameFromBackendAddress = "False"
+      HostName = "${var.pay_bubble_external_hostname}"
     }
   ]
   # Request routing rules
@@ -93,16 +73,9 @@ module "appGwSouth" {
     {
       name = "pay-bubble-http"
       RuleType = "Basic"
-      httpListener = "pay-bubble-http-listener"
-      backendAddressPool = "${var.product}-${var.env}"
-      backendHttpSettings = "backend-80"
-    },
-    {
-      name = "pay-bubble-https"
-      RuleType = "Basic"
       httpListener = "pay-bubble-https-listener"
       backendAddressPool = "${var.product}-${var.env}"
-      backendHttpSettings = "backend-443"
+      backendHttpSettings = "backend-80"
     }
   ]
 
@@ -119,18 +92,6 @@ module "appGwSouth" {
       backendHttpSettings = "backend-80"
       host = "${var.pay_bubble_external_hostname}"
       healthyStatusCodes = "200-404"
-    },
-    {
-      name = "pay-bubble-https-probe"
-      protocol = "Https"
-      path = "/"
-      interval = 30
-      timeout = 30
-      unhealthyThreshold = 5
-      pickHostNameFromBackendHttpSettings = "false"
-      backendHttpSettings = "backend-443"
-      host = "${var.pay_bubble_external_hostname}"
-      healthyStatusCodes = "200-404" // MS returns 404 on /, allowing more codes in case they change it
     }
   ]
 }
