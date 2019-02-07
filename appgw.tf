@@ -10,8 +10,7 @@ module "appGwSouth" {
   subscription = "${var.subscription}"
   location = "${var.location}"
   wafName = "${var.product}"
-  resourcegroupname = "${azurerm_resource_group.rg.name}"
-  use_authentication_cert = true
+  resourcegroupname = "${azurerm_resource_group.rg.name}"  
 
   # vNet connections
   gatewayIpConfigurations = [
