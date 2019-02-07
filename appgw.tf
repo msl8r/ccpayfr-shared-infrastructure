@@ -132,10 +132,6 @@ module "appGwSouth" {
       backendHttpSettings = "backend-443"
       host = "${var.pay_bubble_external_hostname}"
       healthyStatusCodes = "200-404" // MS returns 404 on /, allowing more codes in case they change it
-    },
-  ]
-}
-
     }
   ]
 }
