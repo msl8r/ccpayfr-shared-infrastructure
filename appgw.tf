@@ -10,7 +10,8 @@ module "appGwSouth" {
   subscription = "${var.subscription}"
   location = "${var.location}"
   wafName = "${var.product}"
-  resourcegroupname = "${azurerm_resource_group.rg.name}"  
+  resourcegroupname = "${azurerm_resource_group.rg.name}"
+  use_authentication_cert = true
 
   # vNet connections
   gatewayIpConfigurations = [
@@ -71,8 +72,8 @@ module "appGwSouth" {
       AuthenticationCertificates = ""
       probeEnabled = "True"
       probe = "pay-bubble-http-probe"
-      PickHostNameFromBackendAddress = "True"
-      HostName = ""
+      PickHostNameFromBackendAddress = "False"
+      HostName = "${var.pay_bubble_external_hostname}"
     },
     {
       name = "backend-443"
