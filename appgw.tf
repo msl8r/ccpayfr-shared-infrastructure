@@ -1,3 +1,8 @@
+locals {
+  backend_name = "${var.product}-${var.env}"
+  paybubble_backend_hostname = "ccpay-bubble-frontend-${var.env}.service.core-compute-${var.env}.internal"
+}
+
 data "azurerm_key_vault_secret" "paybubble-cert" {
   name = "${var.pay_bubble_external_cert_name}"
   vault_uri = "${var.pay_bubble_external_cert_vault_uri}"
@@ -53,11 +58,11 @@ module "appGwSouth" {
   # Backend address Pools
   backendAddressPools = [
     {
-      name = "${var.product}-${var.env}"
+      name = "${local.backend_name}"
 
       backendAddresses = [
         {
-          fqdn = "${var.ilbIp}"
+          ipAddress = "${var.ilbIp}"
         },
       ]
     },
@@ -72,8 +77,8 @@ module "appGwSouth" {
       AuthenticationCertificates = ""
       probeEnabled = "True"
       probe = "pay-bubble-http-probe"
-      PickHostNameFromBackendAddress = "False"
-      HostName = "${var.pay_bubble_external_hostname}"
+      PickHostNameFromBackendAddress = "True"
+      HostName = ""
     },
     {
       name = "backend-443"
@@ -84,8 +89,6 @@ module "appGwSouth" {
       probeEnabled = "True"
       probe = "pay-bubble-https-probe"
       PickHostNameFromBackendAddress = "True"
-      HostName = ""
-
     }
   ]
   # Request routing rules
@@ -95,14 +98,14 @@ module "appGwSouth" {
       name = "pay-bubble-http"
       RuleType = "Basic"
       httpListener = "pay-bubble-http-listener"
-      backendAddressPool = "${var.product}-${var.env}"
+      backendAddressPool = "${local.backend_name}"
       backendHttpSettings = "backend-80"
     },
     {
       name = "pay-bubble-https"
       RuleType = "Basic"
       httpListener = "pay-bubble-https-listener"
-      backendAddressPool = "${var.product}-${var.env}"
+      backendAddressPool = "${local.backend_name}"
       backendHttpSettings = "backend-443"
     }
   ]
@@ -118,7 +121,7 @@ module "appGwSouth" {
       unhealthyThreshold = 5
       pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings = "backend-80"
-      host = "${var.pay_bubble_external_hostname}"
+      host = "${local.paybubble_backend_hostname}"
       healthyStatusCodes = "200-404"
     },
     {
@@ -130,7 +133,7 @@ module "appGwSouth" {
       unhealthyThreshold = 5
       pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings = "backend-443"
-      host = "${var.pay_bubble_external_hostname}"
+      host = "${local.paybubble_backend_hostname}"
       healthyStatusCodes = "200-404" // MS returns 404 on /, allowing more codes in case they change it
     }
   ]
