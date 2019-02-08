@@ -1,5 +1,5 @@
 locals {
-  backend_name = "${var.product}-${var.env}"
+  backend_address_pool = "${var.product}-${var.env}"
   paybubble_backend_hostname = "ccpay-bubble-frontend-${var.env}.service.core-compute-${var.env}.internal"
 }
 
@@ -58,11 +58,11 @@ module "appGwSouth" {
   # Backend address Pools
   backendAddressPools = [
     {
-      name = "${local.backend_name}"
+      name = "${local.backend_address_pool}"
 
       backendAddresses = [
         {
-          ipAddress = "${var.ilbIp}"
+          ipAddress = "${local.paybubble_backend_hostname}"
         },
       ]
     },
@@ -99,14 +99,14 @@ module "appGwSouth" {
       name = "pay-bubble-http"
       RuleType = "Basic"
       httpListener = "pay-bubble-http-listener"
-      backendAddressPool = "${local.backend_name}"
+      backendAddressPool = "${local.backend_address_pool}"
       backendHttpSettings = "backend-80"
     },
     {
       name = "pay-bubble-https"
       RuleType = "Basic"
       httpListener = "pay-bubble-https-listener"
-      backendAddressPool = "${local.backend_name}"
+      backendAddressPool = "${local.backend_address_pool}"
       backendHttpSettings = "backend-443"
     }
   ]
@@ -116,7 +116,7 @@ module "appGwSouth" {
     {
       name = "pay-bubble-http-probe"
       protocol = "Http"
-      path = "/"
+      path = "${var.health_check}"
       interval = 30
       timeout = 30
       unhealthyThreshold = 5
@@ -128,7 +128,7 @@ module "appGwSouth" {
     {
       name = "pay-bubble-https-probe"
       protocol = "Https"
-      path = "/"
+      path = "${var.health_check}"
       interval = 30
       timeout = 30
       unhealthyThreshold = 5
