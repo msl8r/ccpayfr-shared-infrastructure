@@ -16,6 +16,7 @@ module "appGwSouth" {
   location = "${var.location}"
   wafName = "${var.product}"
   resourcegroupname = "${azurerm_resource_group.rg.name}"
+  common_tags = "${var.common_tags}"
   use_authentication_cert = true
 
   # vNet connections
