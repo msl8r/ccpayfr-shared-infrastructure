@@ -53,6 +53,14 @@ module "appGwSouth" {
       Protocol = "Https"
       SslCertificate = "${var.pay_bubble_external_cert_name}"
       hostName = "${var.pay_bubble_external_hostname}"
+    },
+    {
+      name = "pay-bubble-https-listener-www"
+      FrontendIPConfiguration = "appGatewayFrontendIP"
+      FrontendPort = "frontendPort443"
+      Protocol = "Https"
+      SslCertificate = "${var.pay_bubble_external_cert_name}"
+      hostName = "${var.pay_bubble_external_hostname_www}"
     }
   ]
 
@@ -107,6 +115,13 @@ module "appGwSouth" {
       name = "pay-bubble-https"
       RuleType = "Basic"
       httpListener = "pay-bubble-https-listener"
+      backendAddressPool = "${local.backend_address_pool}"
+      backendHttpSettings = "backend-443"
+    },
+    {
+      name = "pay-bubble-https-www"
+      RuleType = "Basic"
+      httpListener = "pay-bubble-https-listener-www"
       backendAddressPool = "${local.backend_address_pool}"
       backendHttpSettings = "backend-443"
     }

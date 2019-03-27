@@ -50,4 +50,5 @@ variable "health_check" {
 variable "pay_bubble_external_cert_name" {}
 variable "pay_bubble_external_cert_vault_uri" {}
 variable "pay_bubble_external_hostname" {}
+variable "pay_bubble_external_hostname_www" {}
 
