@@ -86,8 +86,8 @@ module "appGwSouth" {
       AuthenticationCertificates = ""
       probeEnabled = "True"
       probe = "pay-bubble-http-probe"
-      PickHostNameFromBackendAddress = "True"
-      HostName = ""
+      PickHostNameFromBackendAddress = "False"
+      HostName = "${var.pay_bubble_external_hostname}"
     },
     {
       name = "backend-443"
@@ -97,8 +97,8 @@ module "appGwSouth" {
       AuthenticationCertificates = "ilbCert"
       probeEnabled = "True"
       probe = "pay-bubble-https-probe"
-      PickHostNameFromBackendAddress = "True"
-      HostName = ""
+      PickHostNameFromBackendAddress = "False"
+      HostName = "${var.pay_bubble_external_hostname}"
     }
   ]
   # Request routing rules
@@ -138,7 +138,7 @@ module "appGwSouth" {
       unhealthyThreshold = 5
       pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings = "backend-80"
-      host = "${local.paybubble_backend_hostname}"
+      host = "${var.pay_bubble_external_hostname}"
       healthyStatusCodes = "200-404"
     },
     {
@@ -150,7 +150,7 @@ module "appGwSouth" {
       unhealthyThreshold = 5
       pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings = "backend-443"
-      host = "${local.paybubble_backend_hostname}"
+      host = "${var.pay_bubble_external_hostname}"
       healthyStatusCodes = "200-404" // MS returns 404 on /, allowing more codes in case they change it
     }
   ]
