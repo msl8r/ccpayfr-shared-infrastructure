@@ -5,7 +5,3 @@ output "vaultName" {
 output "vaultUri" {
   value = "${module.ccpay-vault.key_vault_uri}"
 }
-
-output "app_service_plan_id" {
-  value = "${module.asp.aspResourceID}"
-}
