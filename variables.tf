@@ -47,9 +47,7 @@ variable "health_check" {
   description = "endpoint for healthcheck"
 }
 
-variable "managed_identity_object_id" {
-  default = ""
-}
+
 
 variable "pay_bubble_external_cert_name" {}
 variable "pay_bubble_external_cert_vault_uri" {}
