@@ -71,7 +71,7 @@ module "appGwSouth" {
 
       backendAddresses = [
         {
-          ipAddress = "${local.paybubble_backend_hostname}"
+          ipAddress = "${var.ilbIp}"
         },
       ]
     },
