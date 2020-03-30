@@ -47,6 +47,15 @@ variable "health_check" {
   description = "endpoint for healthcheck"
 }
 
+variable "managed_identity_object_id" {
+  default = ""
+}
+
+variable "fr_product" {
+  type = "string"
+  default = "fees-register"
+}
+
 variable "pay_bubble_external_cert_name" {}
 variable "pay_bubble_external_cert_vault_uri" {}
 variable "pay_bubble_external_hostname" {}
