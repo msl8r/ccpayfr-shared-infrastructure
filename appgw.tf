@@ -3,7 +3,7 @@ locals {
   paybubble_backend_hostname = "ccpay-bubble-frontend-${var.env}.service.core-compute-${var.env}.internal"
 }
 
-data "azurerm_key_vault_secret" "paybubble-cert" {
+data "azurerm_key_vault_secret" "paybubble_cert" {
   name = "${var.pay_bubble_external_cert_name}"
   vault_uri = "${var.pay_bubble_external_cert_vault_uri}"
 }
@@ -30,7 +30,7 @@ module "appGwSouth" {
   sslCertificates = [
     {
       name = "${var.pay_bubble_external_cert_name}"
-      data = "${data.azurerm_key_vault_secret.paybubble-cert.value}"
+      data = "${data.azurerm_key_vault_secret.paybubble_cert.value}"
       password = ""
     }
   ]
