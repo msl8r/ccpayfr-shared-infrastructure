@@ -36,10 +36,12 @@ module "subscription" {
   forward_dead_lettered_messages_to = "${module.queue.name}"
 }
 
+
+
 resource "azurerm_key_vault_secret" "servicebus_primary_connection_string" {
   name      = "sb-primary-connection-string"
   value     = "${module.servicebus-namespace.primary_send_and_listen_connection_string}"
-  key_vault_id = module.ccpay-vault.id
+  key_vault_id = data.azurerm_key_vault.ccpay_key_vault.id
 }
 
 # primary connection string for send and listen operations

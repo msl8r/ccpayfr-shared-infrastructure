@@ -29,3 +29,8 @@ module "feesregister-vault" {
   managed_identity_object_ids = ["${var.managed_identity_object_id}"]
   create_managed_identity    = true
 }
+
+data "azurerm_key_vault" "ccpay_key_vault" {
+  name                = "${module.ccpay-vault.key_vault_name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+}
