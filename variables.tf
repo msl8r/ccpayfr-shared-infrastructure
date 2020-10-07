@@ -30,6 +30,8 @@ variable "common_tags" {
   type = map(string)
 }
 variable "team_name" {
+  type = string
+  description = "Team Name"
   default = "cc-payments"
 }
 
@@ -56,3 +58,8 @@ variable "fr_product" {
   default = "fees-register"
 }
 
+variable "destroy_me" {
+  type        = "string"
+  description = "Here be dragons! In the future if this is set to Yes then automation will delete this resource on a schedule. Please set to No unless you know what you are doing"
+  default     = "No"
+}
