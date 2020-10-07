@@ -8,9 +8,8 @@ module "servicebus-namespace" {
   name                = "${var.product}-servicebus-${var.env}"
   location            = "${var.location}"
   env                 = "${var.env}"
-  common_tags         = "${var.common_tags}"
+  common_tags         = local.tags
   resource_group_name = "${azurerm_resource_group.rg.name}"
-  team_name = var.team_name
 }
 
 module "topic" {
