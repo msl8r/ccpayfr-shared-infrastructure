@@ -3,7 +3,7 @@ provider "azurerm" {
 }
 
 locals {
-  tags = merge(var.common_tags, map("Team Contact", "${var.team_contact}"))
+  tags = merge(var.common_tags, map("Team Contact", "${var.team_contact}"), map("Team Name", "${var.team_name}"))
 }
 
 resource "azurerm_resource_group" "rg" {
