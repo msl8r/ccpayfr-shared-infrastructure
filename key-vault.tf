@@ -1,6 +1,6 @@
 module "ccpay-vault" {
   source = "git@github.com:hmcts/cnp-module-key-vault?ref=azurermv2"
-  name = "${var.product}-${var.env}"
+  name = join("-", [var.product, var.env])
   product = var.product
   env = var.env
   tenant_id = var.tenant_id
@@ -11,12 +11,11 @@ module "ccpay-vault" {
   common_tags         = var.common_tags
   #aks migration
   managed_identity_object_ids = ["${var.managed_identity_object_id}"]
-  create_managed_identity    = true
 }
 
 module "feesregister-vault" {
   source = "git@github.com:hmcts/cnp-module-key-vault?ref=azurermv2"
-  name = "${var.fr_product}-${var.env}"
+  name = join("-", [var.fr_product, var.env])
   product = var.fr_product
   env = var.env
   tenant_id = var.tenant_id
@@ -27,7 +26,6 @@ module "feesregister-vault" {
   common_tags         = var.common_tags
   #aks migration
   managed_identity_object_ids = ["${var.managed_identity_object_id}"]
-  create_managed_identity    = true
 }
 
 data "azurerm_key_vault" "ccpay_key_vault" {

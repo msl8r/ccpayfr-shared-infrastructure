@@ -1,17 +1,20 @@
 provider "azurerm" {
+  version = "=2.20.0"
   features {}
 }
 
 locals {
-  tags = merge(var.common_tags,
-    map("Deployment Environment", var.env),
-    map("Team Name", var.team_name),
-    map("Team Contact", var.team_contact)
-    )
+  local_tags_ccpay = {
+    "Deployment Environment" = var.env
+    "Team Name" = var.team_name
+    "Team Contact" = var.team_contact
+  }
+
+  tags = merge(var.common_tags, local.local_tags_ccpay)
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.product}-${var.env}"
+  name     = join("-", [var.product, var.env])
   location = var.location
   tags = local.tags
 }
