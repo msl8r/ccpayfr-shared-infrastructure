@@ -10,7 +10,8 @@ module "ccpay-vault" {
   product_group_object_id = "56679aaa-b343-472a-bb46-58bbbfde9c3d"
   common_tags         = var.common_tags
   #aks migration
-  managed_identity_object_id = "${var.managed_identity_object_id}"
+  managed_identity_object_ids = ["${data.azurerm_user_assigned_identity.ccpay-shared-identity.principal_id}","${var.managed_identity_object_id}"]
+  create_managed_identity = true
 }
 
 module "feesregister-vault" {
@@ -25,10 +26,21 @@ module "feesregister-vault" {
   product_group_object_id = "56679aaa-b343-472a-bb46-58bbbfde9c3d"
   common_tags         = var.common_tags
   #aks migration
-  managed_identity_object_id = "${var.managed_identity_object_id}"
+  managed_identity_object_ids = ["${data.azurerm_user_assigned_identity.FeesRegister-shared-identity.principal_id}","${var.managed_identity_object_id}"]
+  create_managed_identity = true
 }
 
 data "azurerm_key_vault" "ccpay_key_vault" {
   name                = module.ccpay-vault.key_vault_name
   resource_group_name = azurerm_resource_group.rg.name
+}
+
+data "azurerm_user_assigned_identity" "ccpay-shared-identity" {
+  name                = "${var.product}-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
+}
+
+data "azurerm_user_assigned_identity" "FeesRegister-shared-identity" {
+  name                = "${var.fr_product}-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
 }
