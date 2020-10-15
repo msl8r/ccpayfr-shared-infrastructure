@@ -1,19 +1,19 @@
 variable "product" {
-  type = "string"
+  type = string
   default = "ccpay"
 }
 
 variable "location" {
-  type    = "string"
+  type    = string
   default = "UK South"
 }
 
 variable "env" {
-  type = "string"
+  type = string
 }
 
 variable "subscription" {
-  type    = "string"
+  type    = string
 }
 
 variable "ilbIp" {}
@@ -27,9 +27,11 @@ variable "jenkins_AAD_objectId" {
 }
 
 variable "common_tags" {
-  type = "map"
+  type = map(string)
 }
 variable "team_name" {
+  type = string
+  description = "Team Name"
   default = "cc-payments"
 }
 
@@ -37,8 +39,8 @@ variable "team_contact" {
   default = "#cc-payments-tech "
 }
 variable "application_type" {
-  type = "string"
-  default = "Web"
+  type = string
+  default = "web"
   description = "Type of Application Insights (Web/Other)"
 }
 
@@ -52,7 +54,6 @@ variable "managed_identity_object_id" {
 }
 
 variable "fr_product" {
-  type = "string"
+  type = string
   default = "fees-register"
 }
-
