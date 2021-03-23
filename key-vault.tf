@@ -1,5 +1,5 @@
 module "ccpay-vault" {
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=azurermv2"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name = join("-", [var.product, var.env])
   product = var.product
   env = var.env
@@ -7,7 +7,7 @@ module "ccpay-vault" {
   object_id = var.jenkins_AAD_objectId
   resource_group_name = azurerm_resource_group.rg.name
   # group id of dcd_reform_dev_azure
-  product_group_object_id = "56679aaa-b343-472a-bb46-58bbbfde9c3d"
+  product_group_name = "dcd_group_fees&pay_v2"
   common_tags         = var.common_tags
   #aks migration
   managed_identity_object_ids = ["${var.managed_identity_object_id}"]
@@ -15,7 +15,7 @@ module "ccpay-vault" {
 }
 
 module "feesregister-vault" {
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=azurermv2"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name = join("-", [var.fr_product, var.env])
   product = var.fr_product
   env = var.env
@@ -23,7 +23,7 @@ module "feesregister-vault" {
   object_id = var.jenkins_AAD_objectId
   resource_group_name = azurerm_resource_group.rg.name
   # group id of dcd_reform_dev_azure
-  product_group_object_id = "56679aaa-b343-472a-bb46-58bbbfde9c3d"
+  product_group_name = "dcd_group_fees&pay_v2"
   common_tags         = var.common_tags
   #aks migration
   managed_identity_object_ids = ["${var.managed_identity_object_id}", "${data.azurerm_user_assigned_identity.ccpay-shared-identity.principal_id}"]
