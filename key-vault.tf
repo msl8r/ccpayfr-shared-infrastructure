@@ -1,5 +1,5 @@
 module "ccpay-vault" {
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=azurermv2"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name = join("-", [var.product, var.env])
   product = var.product
   env = var.env
@@ -15,7 +15,7 @@ module "ccpay-vault" {
 }
 
 module "feesregister-vault" {
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=azurermv2"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name = join("-", [var.fr_product, var.env])
   product = var.fr_product
   env = var.env
