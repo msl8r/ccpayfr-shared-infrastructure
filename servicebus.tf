@@ -64,16 +64,3 @@ resource "azurerm_key_vault_secret" "cpo-topic-primary-send-listen-shared-access
   value        = module.topic_cpo.primary_send_and_listen_shared_access_key
   key_vault_id = data.azurerm_key_vault.ccpay_key_vault.id
 }
-
-# primary connection string for send and listen operations
-# output "sb_primary_send_and_listen_connection_string" {
-#   value = module.servicebus-namespace.primary_send_and_listen_connection_string
-# }
-
-# output "topic_primary_send_and_listen_connection_string" {
-#   value = module.topic.primary_send_and_listen_connection_string
-# }
-
-# output "psc_subscription_connection_string" {
-#   value = "${module.topic.primary_send_and_listen_connection_string}/subscriptions/${local.subscription_name}"
-# }

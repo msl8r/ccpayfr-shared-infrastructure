@@ -44,11 +44,6 @@ variable "application_type" {
   description = "Type of Application Insights (Web/Other)"
 }
 
-variable "health_check" {
-  default     = "/health"
-  description = "endpoint for healthcheck"
-}
-
 variable "managed_identity_object_id" {
   default = ""
 }
