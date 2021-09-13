@@ -59,8 +59,8 @@ resource "azurerm_key_vault_secret" "servicebus_primary_connection_string" {
   key_vault_id = data.azurerm_key_vault.ccpay_key_vault.id
 }
 
-resource “azurerm_key_vault_secret” “cpo-topic-primary-send-listen-shared-access-key” {
-  name         = “cpo-topic-primary-send-listen-shared-access-key”
+resource "azurerm_key_vault_secret" "cpo-topic-primary-send-listen-shared-access-key" {
+  name         = "cpo-topic-primary-send-listen-shared-access-key"
   value        = module.topic_cpo.primary_send_and_listen_shared_access_key
   key_vault_id = data.azurerm_key_vault.ccpay_key_vault.id
 }
