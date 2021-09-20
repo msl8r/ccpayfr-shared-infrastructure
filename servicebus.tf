@@ -64,3 +64,15 @@ resource "azurerm_key_vault_secret" "cpo-topic-primary-send-listen-shared-access
   value        = module.topic_cpo.primary_send_and_listen_shared_access_key
   key_vault_id = data.azurerm_key_vault.ccpay_key_vault.id
 }
+
+resource "azurerm_key_vault_secret" "ccpay-cpo-topic-name" {
+  name         = "ccpay-cpo-topic-name"
+  value        = "ccpay-cpo-topic"
+  key_vault_id = data.azurerm_key_vault.ccpay_key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "ccpay-cpo-subscription-name" {
+  name         = "ccpay-cpo-subscription-name"
+  value        = "defaultServiceCallbackSubscription"
+  key_vault_id = data.azurerm_key_vault.ccpay_key_vault.id
+}
