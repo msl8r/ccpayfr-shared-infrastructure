@@ -3,6 +3,11 @@ variable "product" {
   default = "ccpay"
 }
 
+variable "core_product" {
+  type    = string
+  default = "ccpay"
+}
+
 variable "location" {
   type    = string
   default = "UK South"
