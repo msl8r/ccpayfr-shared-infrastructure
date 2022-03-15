@@ -57,3 +57,7 @@ variable "fr_product" {
   type = string
   default = "fees-register"
 }
+
+variable "sku" {
+  default = "Premium"
+}
