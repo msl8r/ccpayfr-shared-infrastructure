@@ -4,6 +4,10 @@ locals {
 }
 
 module "servicebus-namespace" {
+  providers = {
+    azurerm.private-endpoint = azurerm.private-endpoint
+  }
+
   source              = "git@github.com:hmcts/terraform-module-servicebus-namespace"
   name                = "${var.product}-servicebus-${var.env}"
   location            = var.location

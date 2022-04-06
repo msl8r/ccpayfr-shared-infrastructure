@@ -57,3 +57,5 @@ variable "fr_product" {
   type = string
   default = "fees-register"
 }
+
+variable "aks_subscription_id" {}
